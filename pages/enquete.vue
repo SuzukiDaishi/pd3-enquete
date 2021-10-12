@@ -10,12 +10,12 @@ div
           label.label.is-size-5 音声１(目標話者の声)を聞いてください。<br />何度聞き直しても大丈夫です。
           vue-plyr
             audio(controls crossorigin playsinline)
-              source(src="/output_p226_p226.wav" type="audio/wav")
+              source(src="./output_p226_p226.wav" type="audio/wav")
         .field
           label.label.is-size-5 音声２(変換した音声)を聞いてください。<br />何度聞き直しても大丈夫です。
           vue-plyr
             audio(controls crossorigin playsinline)
-              source(src="/output_p226_p226.wav" type="audio/wav")
+              source(src="./output_p226_p226.wav" type="audio/wav")
         .mt-6
         .field
           label.label.is-size-5 [質問１] 音声１に比べ、音声２はどの音声が劣化はわかりますか。(必須)<br />(似ているかではなく、ノイズの混入度合いの調査)

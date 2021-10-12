@@ -54,7 +54,7 @@ export default {
   build: {
   },
   router: {
-    base: '/pd3-enquete/',
+    base: 'https://suzukidaishi.github.io/pd3-enquete/',
   },
   generate: {
     dir: 'docs'
