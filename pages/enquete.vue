@@ -60,7 +60,7 @@ export default {
     }
   },
   async mounted() {
-    this.data = await this.$axios.$get('./out/data.json')
+    this.data = await this.$axios.$get('https://suzukidaishi.github.io/pd3-enquete/out/data.json')
     this.current = this.data[this.$store.state.enquete.questionNumber]
     console.log(this.current);
   },
