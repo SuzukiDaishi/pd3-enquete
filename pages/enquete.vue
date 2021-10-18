@@ -6,16 +6,16 @@ div
       .box
         h2.title アンケート {{ $store.state.enquete.questionNumber + 1 }}
         p.subtitle 本番です。よろしくお願いいたします。
-        .field
+        .field(v-if="!!current")
           label.label.is-size-5 音声１(目標話者の声)を聞いてください。<br />何度聞き直しても大丈夫です。
           vue-plyr
             audio(controls crossorigin playsinline)
-              source(src="output_p226_p226.wav" type="audio/wav")
-        .field
+              source(:src="`https://suzukidaishi.github.io/pd3-enquete/${current['source']}`" type="audio/wav")
+        .field(v-if="!!current")
           label.label.is-size-5 音声２(変換した音声)を聞いてください。<br />何度聞き直しても大丈夫です。
           vue-plyr
             audio(controls crossorigin playsinline)
-              source(src="output_p226_p226.wav" type="audio/wav")
+              source(:src="`https://suzukidaishi.github.io/pd3-enquete/${current['output']}`" type="audio/wav")
         .mt-6
         .field
           label.label.is-size-5 [質問１] 音声１に比べ、音声２はどの音声が劣化はわかりますか。(必須)<br />(似ているかではなく、ノイズの混入度合いの調査)
@@ -59,6 +59,11 @@ export default {
       this.$store.commit('enquete/setQuestionUser')
     }
   },
+  async mounted() {
+    this.data = await this.$axios.$get('./out/data.json')
+    this.current = this.data[this.$store.state.enquete.questionNumber]
+    console.log(this.current);
+  },
   methods: {
     async send() {
       this.isSending = true
@@ -68,10 +73,12 @@ export default {
       this.ans3 = ''
       this.$store.commit('enquete/setQuestionNumber', this.$store.state.enquete.questionNumber + 1)
       window.location.reload()
-    }
+    },
   },
   data() {
     return {
+      data: [],
+      current: null,
       ans1: null,
       ans2: null,
       ans3: '',
