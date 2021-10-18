@@ -4,7 +4,7 @@ div
   .container
     section.section
       .box
-        h2.title アンケート {{ $store.state.enquete.questionNumber + 1 }}
+        h2.title アンケート {{ $store.state.enquete.questionNumber + 1 }} / {{ data.length }}
         p.subtitle 本番です。よろしくお願いいたします。
         .field(v-if="!!current")
           label.label.is-size-5 音声１(目標話者の声)を聞いてください。<br />何度聞き直しても大丈夫です。

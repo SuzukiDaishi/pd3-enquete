@@ -14,7 +14,7 @@ div
           p.is-size-5
             | このアンケートでは、<b>変換目標の人の声</b>と<b>別の人の声をその人の声に変換した音声</b>を聞いてもらいます。<br/>
             | その上でいくつかの質問に答えていただきます。<br />
-            | これをN回行っていただきます。(所要時間はX分程度です) <br />
+            | これを{{ data.length }}回行っていただきます。(所要時間は{{ Math.floor(data.length * 10 / 60) }}分程度です) <br />
             br 
             | <strong>流れとしては、以下の通りです。</strong>
             ol.pl-5
@@ -47,8 +47,12 @@ div
 <script>
 export default {
   name: 'Home',
+  async mounted() {
+    this.data = await this.$axios.$get('https://suzukidaishi.github.io/pd3-enquete/out/data.json')
+  },
   data() {
     return {
+      data: [],
       isAgree: false
     }
   }
