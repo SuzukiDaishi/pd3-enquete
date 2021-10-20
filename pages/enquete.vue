@@ -61,6 +61,10 @@ export default {
   },
   async mounted() {
     this.data = await this.$axios.$get('https://suzukidaishi.github.io/pd3-enquete/out/data.json')
+    console.log(this.data.length >= this.$store.state.enquete.questionNumber, this.data.length, this.$store.state.enquete.questionNumber);
+    if (this.data.length <= this.$store.state.enquete.questionNumber) {
+      this.$router.push('/finish')
+    }
     this.current = this.data[this.$store.state.enquete.questionNumber]
     console.log(this.current);
   },
