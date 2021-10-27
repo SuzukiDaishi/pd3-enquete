@@ -20,9 +20,9 @@ div
               source(:src="`https://suzukidaishi.github.io/pd3-enquete/${current['output']}`" type="audio/wav")
         .mt-6
         .field
-          label.label.is-size-5 [質問１] 音声１に比べ、音声２はどの音声が劣化はわかりますか。(必須)<br />(似ているかではなく、ノイズの混入度合いの調査)
+          label.label.is-size-5 [質問１] 音声１に比べ、音声２はどの程度劣化していますか？(必須)<br />(似ているかではなく、ノイズの混入度合いの調査)
           .block
-            b-radio.mr-3(v-model="ans1" name="q1" native-value="5") わからない
+            b-radio.mr-3(v-model="ans1" name="q1" native-value="5") 劣化がわからない
             b-radio.mr-3(v-model="ans1" name="q1" native-value="4") わかるが気にならない
             b-radio.mr-3(v-model="ans1" name="q1" native-value="3") やや気になる
             b-radio.mr-3(v-model="ans1" name="q1" native-value="2") 気になる
