@@ -5,7 +5,9 @@ div
     section.section
       .box
         h2.title アンケート {{ $store.state.enquete.questionNumber + 1 }} / {{ data.length }}
-        p.subtitle 質問ID: {{ data[$store.state.enquete.questionNumber]['id'] }}, 本番です。よろしくお願いいたします。
+        p.subtitle 
+          span(v-if="!!data[$store.state.enquete.questionNumber]") 質問ID: {{ data[$store.state.enquete.questionNumber]['id'] }}, 
+          | 本番です。よろしくお願いいたします。
         .field(v-if="!!current")
           label.label.is-size-5 音声１(目標話者の声)を聞いてください。<br />何度聞き直しても大丈夫です。
           vue-plyr
@@ -60,7 +62,6 @@ export default {
     }
   },
   async mounted() {
-    
     const type = this.$route.query.type || 'all'
     switch (type) {
       case 'jp':
@@ -72,7 +73,10 @@ export default {
       default:
         this.data = await this.$axios.$get('https://suzukidaishi.github.io/pd3-enquete/out/data.json')
     }
-
+    console.log(type != this.$store.state.enquete.questionType);
+    if (type != this.$store.state.enquete.questionType) {
+      this.$store.commit('enquete/setQuestionType', type)
+    }
     if (this.data.length <= this.$store.state.enquete.questionNumber) {
       this.$router.push('/finish')
     }
@@ -82,7 +86,7 @@ export default {
   methods: {
     async send() {
       this.isSending = true
-      const res = await this.$axios.$get(`https://script.google.com/macros/s/AKfycbzO6KY_oDTF4HXfj34TQjm9hpEjHwTsFJbmhfbd9-ni5mSUiTNKUMxO_MinN3wK3WDG/exec?domain=${ this.$route.query.domain || 'test' }&id=${ this.$store.state.enquete.questionNumber + 1 }&q1=${ this.ans1 }&q2=${ this.ans2 }&q3=${ this.ans3 }&user=${ this.$store.state.enquete.questionUser }`)
+      const res = await this.$axios.$get(`https://script.google.com/macros/s/AKfycbzO6KY_oDTF4HXfj34TQjm9hpEjHwTsFJbmhfbd9-ni5mSUiTNKUMxO_MinN3wK3WDG/exec?domain=${ this.$route.query.domain || 'test' }&id=${ this.data[this.$store.state.enquete.questionNumber]['id'] }&q1=${ this.ans1 }&q2=${ this.ans2 }&q3=${ this.ans3 }&user=${ this.$store.state.enquete.questionUser }`)
       this.ans1 = null
       this.ans2 = null
       this.ans3 = ''

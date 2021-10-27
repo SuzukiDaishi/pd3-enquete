@@ -3,6 +3,7 @@
 export const state = () => ({
   questionNumber: null,
   questionUser: '',
+  questionType: 'all',
 })
 
 export const mutations = {
@@ -12,5 +13,9 @@ export const mutations = {
   },
   setQuestionNumber(state, qn) {
     state.questionNumber = qn
+  },
+  setQuestionType(state, qt) {
+    state.questionType = qt
+    state.questionNumber = 0
   },
 }
