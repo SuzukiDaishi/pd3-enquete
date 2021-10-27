@@ -41,14 +41,24 @@ div
         |  注意事項に同意しますか？
       br
       br
-      nuxt-link.button.is-size-5.is-primary(tag="button" :to="`/testEnquete/?domain=${$route.query.domain || 'test'}`" :disabled="!isAgree") アンケートを開始する
+      nuxt-link.button.is-size-5.is-primary(tag="button" :to="`/testEnquete/?domain=${$route.query.domain || 'test'}&type=${$route.query.type || 'all'}`" :disabled="!isAgree") アンケートを開始する
 </template>
 
 <script>
 export default {
   name: 'Home',
   async mounted() {
-    this.data = await this.$axios.$get('https://suzukidaishi.github.io/pd3-enquete/out/data.json')
+    const type = this.$route.query.type || 'all'
+    switch (type) {
+      case 'jp':
+        this.data = await this.$axios.$get('https://suzukidaishi.github.io/pd3-enquete/out/data_jp.json')
+        break
+      case 'en':
+        this.data = await this.$axios.$get('https://suzukidaishi.github.io/pd3-enquete/out/data_en.json')
+        break
+      default:
+        this.data = await this.$axios.$get('https://suzukidaishi.github.io/pd3-enquete/out/data.json')
+    }
   },
   data() {
     return {

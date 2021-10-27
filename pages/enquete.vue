@@ -5,7 +5,7 @@ div
     section.section
       .box
         h2.title アンケート {{ $store.state.enquete.questionNumber + 1 }} / {{ data.length }}
-        p.subtitle 本番です。よろしくお願いいたします。
+        p.subtitle 質問ID: {{ data[$store.state.enquete.questionNumber]['id'] }}, 本番です。よろしくお願いいたします。
         .field(v-if="!!current")
           label.label.is-size-5 音声１(目標話者の声)を聞いてください。<br />何度聞き直しても大丈夫です。
           vue-plyr
@@ -60,8 +60,19 @@ export default {
     }
   },
   async mounted() {
-    this.data = await this.$axios.$get('https://suzukidaishi.github.io/pd3-enquete/out/data.json')
-    console.log(this.data.length >= this.$store.state.enquete.questionNumber, this.data.length, this.$store.state.enquete.questionNumber);
+    
+    const type = this.$route.query.type || 'all'
+    switch (type) {
+      case 'jp':
+        this.data = await this.$axios.$get('https://suzukidaishi.github.io/pd3-enquete/out/data_jp.json')
+        break
+      case 'en':
+        this.data = await this.$axios.$get('https://suzukidaishi.github.io/pd3-enquete/out/data_en.json')
+        break
+      default:
+        this.data = await this.$axios.$get('https://suzukidaishi.github.io/pd3-enquete/out/data.json')
+    }
+
     if (this.data.length <= this.$store.state.enquete.questionNumber) {
       this.$router.push('/finish')
     }

@@ -36,7 +36,7 @@ div
         .field
           label.label.is-size-5 [質問３] その他気づいたことや思ったことを教えてください。(任意)<br />(今後の開発に役立てます)
           b-input(maxlength="300" type="textarea" v-model="ans3")
-        nuxt-link.button.is-size-5.is-primary.mt-3(tag="button" :to="`/enquete/?domain=${$route.query.domain || 'test'}`" :disabled="!ans1 || !ans2") 提出
+        nuxt-link.button.is-size-5.is-primary.mt-3(tag="button" :to="`/enquete/?domain=${$route.query.domain || 'test'}&type=${$route.query.type || 'all'}`" :disabled="!ans1 || !ans2") 提出
 </template>
 
 <script>
